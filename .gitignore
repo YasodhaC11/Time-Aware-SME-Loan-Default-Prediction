@@ -19,3 +19,6 @@ venv/
 # Large files
 *.pkl
 *.joblib
+
+# Dataset
+FOIA_7a_FY2020_Present_asof_260930.csv
