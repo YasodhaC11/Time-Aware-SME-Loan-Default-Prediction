@@ -326,7 +326,7 @@ def init_shap():
         )
 
 
-init_shap()
+#init_shap()
 
 
 def display_value(group, row, parsed):
@@ -512,7 +512,9 @@ def predict():
             "rate": values["InitialInterestRate"],
             "franchise": franchise == "yes",
         }
-        drivers, shap_note = explain(X, parsed)
+        #drivers, shap_note = explain(X, parsed)
+        drivers = []
+        shap_note = "Feature explanations temporarily disabled."
 
         return render_template(
             "result.html",
