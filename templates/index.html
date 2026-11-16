@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SME Credit Risk Prediction</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+  {# Dropdown whose options come from the training data #}
+  {% macro select(name, label, opts, selected) %}
+  <label>
+    {{ label }}
+    <select name="{{ name }}" required>
+      <option value="">Select…</option>
+      {% for o in opts %}
+      <option value="{{ o.value }}" {% if selected==o.value %}selected{% endif %}>{{ o.label }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  {% endmacro %}
+
+  {% set ns = namespace(n=0) %}
+
+  <main class="container">
+
+    <header class="hero">
+      <p class="eyebrow">SME CREDIT ANALYTICS</p>
+      <h1>Loan Default Risk Prediction</h1>
+      <p>Compare an SME loan with past SBA 7(a) loans to see how risky it looks.</p>
+    </header>
+
+    <section class="form-card">
+
+      <div class="form-heading">
+        <h2>Loan Application Details</h2>
+        <p>Enter the applicant and loan information below. All fields are required.</p>
+      </div>
+
+      {% if errors %}
+      <div class="alert" role="alert">
+        <strong>Please fix the following:</strong>
+        <ul>
+          {% for e in errors %}<li>{{ e }}</li>{% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      <form id="loan-form" action="{{ url_for('predict') }}" method="POST">
+
+        <div class="three-column-grid">
+
+          {% if show.loan %}
+          {% set ns.n = ns.n + 1 %}
+          <section class="input-section">
+            <div class="column-heading">
+              <span class="section-number">{{ '%02d'|format(ns.n) }}</span>
+              <h3>Loan Details</h3>
+            </div>
+
+            {% if "GrossApproval" in needed %}
+            <label>
+              Gross Loan Approval ($)
+              <input type="number" name="GrossApproval" placeholder="e.g. 100000" min="1" step="0.01"
+                value="{{ form.get('GrossApproval', '') }}" required>
+              {% if ranges.amount %}<span class="hint">Most loans: ${{ "{:,.0f}".format(ranges.amount[0]) }} to
+                ${{ "{:,.0f}".format(ranges.amount[2]) }}</span>{% endif %}
+            </label>
+            {% endif %}
+
+            {% if "SBAGuaranteedApproval" in needed %}
+            <label>
+              SBA Guaranteed Amount ($)
+              <input type="number" name="SBAGuaranteedApproval" placeholder="e.g. 75000" min="0" step="0.01"
+                value="{{ form.get('SBAGuaranteedApproval', '') }}" required>
+              <span class="hint" id="guarantee-pct">Cannot be more than the gross approval.</span>
+            </label>
+            {% endif %}
+
+            {% if "InitialInterestRate" in needed %}
+            <label>
+              Initial Interest Rate (%)
+              <input type="number" name="InitialInterestRate" placeholder="e.g. 5.5" min="0" max="100" step="0.01"
+                value="{{ form.get('InitialInterestRate', '') }}" required>
+              {% if ranges.rate %}<span class="hint">Most loans: {{ "%.2f"|format(ranges.rate[0]) }} to
+                {{ "%.2f"|format(ranges.rate[2]) }}</span>{% endif %}
+            </label>
+            {% endif %}
+
+            {% if "JobsSupported" in needed %}
+            <label>
+              Jobs Supported
+              <input type="number" name="JobsSupported" placeholder="e.g. 5" min="0" step="1"
+                value="{{ form.get('JobsSupported', '') }}" required>
+            </label>
+            {% endif %}
+          </section>
+          {% endif %}
+
+          {% if show.business %}
+          {% set ns.n = ns.n + 1 %}
+          <section class="input-section">
+            <div class="column-heading">
+              <span class="section-number">{{ '%02d'|format(ns.n) }}</span>
+              <h3>Business Details</h3>
+            </div>
+
+            {% if "BusinessType" in needed %}
+            {{ select("BusinessType", "Business Type", options["BusinessType"], form.get("BusinessType")) }}
+            {% endif %}
+
+            {% if "BusinessAge" in needed %}
+            {{ select("BusinessAge", "Business Age", options["BusinessAge"], form.get("BusinessAge")) }}
+            {% endif %}
+
+            {% if "NaicsCode" in needed %}
+            <label>
+              NAICS Industry Code
+              <input type="text" name="NaicsCode" placeholder="e.g. 722511" inputmode="numeric" maxlength="6"
+                pattern="[0-9]{3,6}" value="{{ form.get('NaicsCode', '') }}" required>
+              <span class="hint">3 to 6 digits. The first 3 digits are used.</span>
+            </label>
+            {% endif %}
+
+            {% if "Franchise" in needed %}
+            <label>
+              Franchise
+              <select name="Franchise" required>
+                <option value="">Select…</option>
+                <option value="no" {% if form.get('Franchise')=='no' %}selected{% endif %}>No</option>
+                <option value="yes" {% if form.get('Franchise')=='yes' %}selected{% endif %}>Yes</option>
+              </select>
+            </label>
+            {% endif %}
+          </section>
+          {% endif %}
+
+          {% if show.terms %}
+          {% set ns.n = ns.n + 1 %}
+          <section class="input-section">
+            <div class="column-heading">
+              <span class="section-number">{{ '%02d'|format(ns.n) }}</span>
+              <h3>Loan Characteristics</h3>
+            </div>
+
+            {% for name, label in select_fields %}
+            {% if name not in ["BusinessType", "BusinessAge"] %}
+            {{ select(name, label, options[name], form.get(name)) }}
+            {% endif %}
+            {% endfor %}
+          </section>
+          {% endif %}
+
+        </div>
+
+        <div class="form-footer">
+          <p><span class="required-mark">*</span> Lenders and categories come from the training data.
+            "OTHER" means a category that is rare there.</p>
+
+          <button type="submit" class="predict-button" id="submit-button">
+            Predict Default Risk <span>→</span>
+          </button>
+        </div>
+
+      </form>
+    </section>
+
+    <footer class="page-footer">
+      SME Loan Risk Assessment | Machine Learning Decision Support
+    </footer>
+
+  </main>
+
+  <script>
+    // Live "% guaranteed" helper and a busy state on the submit button.
+    (function () {
+      const gross = document.querySelector('[name=GrossApproval]');
+      const guar = document.querySelector('[name=SBAGuaranteedApproval]');
+      const out = document.getElementById('guarantee-pct');
+      function update() {
+        if (!gross || !guar || !out) return;
+        const a = parseFloat(gross.value), b = parseFloat(guar.value);
+        if (a > 0 && b >= 0) {
+          out.textContent = (b / a * 100).toFixed(1) + '% of the loan is guaranteed' + (b > a ? ' (too high)' : '');
+        } else {
+          out.textContent = 'Cannot be more than the gross approval.';
+        }
+      }
+      if (gross) gross.addEventListener('input', update);
+      if (guar) guar.addEventListener('input', update);
+      update();
+
+      const form = document.getElementById('loan-form');
+      const button = document.getElementById('submit-button');
+      form.addEventListener('submit', function () {
+        button.disabled = true;
+        button.firstChild.textContent = 'Scoring… ';
+      });
+      window.addEventListener('pageshow', function () {   // back button
+        button.disabled = false;
+        button.firstChild.textContent = 'Predict Default Risk ';
+      });
+    })();
+  </script>
+
+</body>
+
+</html>

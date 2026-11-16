@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SME Credit Risk Assessment</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="result-page">
+
+  <main class="container result-container">
+
+    <header class="result-header">
+      <div>
+        <p class="eyebrow">SME CREDIT ANALYTICS</p>
+        <h1>Loan Risk Assessment</h1>
+        <p class="header-description">Individual loan default risk evaluation</p>
+      </div>
+      <div class="report-label"><span class="report-dot"></span>Assessment Complete</div>
+    </header>
+
+    {% if notices %}
+    <div class="notice" role="note">
+      <strong>Please note</strong>
+      <ul>{% for n in notices %}<li>{{ n }}</li>{% endfor %}</ul>
+    </div>
+    {% endif %}
+
+    <!-- Risk overview -->
+    <section class="result-card result-overview">
+
+      <p class="section-label">MODEL RISK ASSESSMENT</p>
+
+      <div class="risk-status">
+        <span class="risk-badge risk-{{ tier_class }}">{{ tier }} Risk</span>
+      </div>
+
+      <p class="headline">
+        Risk position: <strong>{{ "%.0f"|format(percentile) }}</strong> out of 100
+        (0 = least risky, 100 = riskiest of the {{ meta.test_year }} test loans)
+      </p>
+
+      <div class="zone-gauge" role="img"
+        aria-label="Risk position: {{ '%.0f'|format(percentile) }} out of 100, {{ tier }} risk group">
+        <div class="zones">
+          <span class="zone zone-low" style="width: 70%"></span>
+          <span class="zone zone-medium" style="width: 20%"></span>
+          <span class="zone zone-high" style="width: 10%"></span>
+        </div>
+        <div class="marker" style="left: {{ percentile }}%"></div>
+        <div class="zone-labels">
+          <span style="width: 70%">Low (lowest 70%)</span>
+          <span style="width: 20%">Medium</span>
+          <span style="width: 10%">High</span>
+        </div>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat">
+          <strong>{{ "%.1f"|format(tier_stats.default_rate * 100) }}%</strong>
+          <span>of {{ tier }}-group loans defaulted within {{ meta.horizon_months }} months in {{ meta.test_year
+            }}</span>
+        </div>
+        <div class="stat">
+          <strong>{{ "%.1f"|format(base_rate * 100) }}%</strong>
+          <span>default rate across all {{ meta.test_year }} test loans</span>
+        </div>
+        <div class="stat">
+          <strong>{{ "%.0f"|format(tier_stats.share_of_defaults * 100) }}%</strong>
+          <span>of all defaults fell in the {{ tier }} group</span>
+        </div>
+      </div>
+
+      <p class="explanation">
+        The position is measured against loans from a year the model never saw during training.
+        The raw model score ({{ "%.4f"|format(score) }}) is used for ranking only and is not a
+        probability of default.
+      </p>
+
+    </section>
+
+    <!-- Loan details -->
+    <section class="result-card details-card">
+      <div class="section-heading">
+        <div class="section-icon">01</div>
+        <div>
+          <h2>Loan Application Summary</h2>
+          <p>Details submitted for this assessment</p>
+        </div>
+      </div>
+
+      <div class="details-grid">
+        {% for key, value in loan_details %}
+        <div class="detail-item">
+          <span>{{ key }}</span>
+          <strong>{{ value }}</strong>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- Explainability -->
+    <section class="result-card details-card">
+      <div class="section-heading">
+        <div class="section-icon">02</div>
+        <div>
+          <h2>What Influenced This Result</h2>
+          <p>The five inputs with the largest effect on this loan's score</p>
+        </div>
+      </div>
+
+      {% if drivers %}
+      <div class="driver-list">
+        {% for d in drivers %}
+        <div class="driver-row">
+          <div class="driver-information">
+            <strong>{{ d.name }}: {{ d.value }}</strong>
+            <span class="driver-direction {{ 'direction-up' if d.up else 'direction-down' }}">
+              {{ '↑ Raises the risk score' if d.up else '↓ Lowers the risk score' }}
+            </span>
+          </div>
+          <div class="driver-bar" aria-hidden="true">
+            <span class="{{ 'bar-up' if d.up else 'bar-down' }}" style="width: {{ d.width }}%"></span>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <p class="muted">{{ shap_note }}</p>
+      {% endif %}
+
+      <p class="shap-disclaimer">
+        Based on SHAP values: they show how each input moved this loan's score relative to an
+        average loan, adding up all categories of that input. They do not prove cause and effect.
+      </p>
+    </section>
+
+    <div class="result-actions">
+      <a class="button-link" href="{{ url_for('home') }}">Assess Another Loan</a>
+      <button type="button" class="print-button" onclick="window.print()">Print Assessment</button>
+    </div>
+
+    <footer class="report-footer">
+      <strong>Important Notice</strong>
+      <p>
+        This is a machine-learning decision-support demonstration ({{ meta.model_name }}, trained on
+        {{ meta.train_years }} loans and tested on {{ meta.test_year }}). It ranks loans by relative
+        risk and does not give a calibrated probability of default. It must not be used alone to
+        approve or reject a loan. Real-world use requires validation of calibration, fairness,
+        data quality and decision thresholds.
+      </p>
+    </footer>
+
+  </main>
+
+</body>
+
+</html>

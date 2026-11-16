@@ -1,0 +1,948 @@
+{
+  "active_features": [
+    "log_amount",
+    "guarantee_pct",
+    "amount_per_job",
+    "rate",
+    "jobs",
+    "zero_jobs",
+    "is_franchise",
+    "naics3",
+    "BusinessAge",
+    "ProjectState",
+    "ProcessingMethod",
+    "FixedorVariableInterestInd",
+    "RevolverStatus",
+    "CollateralInd",
+    "BusinessType",
+    "BankName"
+  ],
+  "model_name": "LGBMClassifier",
+  "options": {
+    "BusinessType": [
+      {
+        "value": "CORPORATION",
+        "label": "CORPORATION"
+      },
+      {
+        "value": "INDIVIDUAL",
+        "label": "INDIVIDUAL"
+      },
+      {
+        "value": "PARTNERSHIP",
+        "label": "PARTNERSHIP"
+      },
+      {
+        "value": "OTHER",
+        "label": "OTHER (rare in training data)"
+      }
+    ],
+    "BusinessAge": [
+      {
+        "value": "CHANGE OF OWNERSHIP",
+        "label": "CHANGE OF OWNERSHIP"
+      },
+      {
+        "value": "EXISTING OR MORE THAN 2 YEARS OLD",
+        "label": "EXISTING OR MORE THAN 2 YEARS OLD"
+      },
+      {
+        "value": "NEW BUSINESS OR 2 YEARS OR LESS",
+        "label": "NEW BUSINESS OR 2 YEARS OR LESS"
+      },
+      {
+        "value": "STARTUP, LOAN FUNDS WILL OPEN BUSINESS",
+        "label": "STARTUP, LOAN FUNDS WILL OPEN BUSINESS"
+      },
+      {
+        "value": "UNANSWERED",
+        "label": "UNANSWERED"
+      },
+      {
+        "value": "OTHER",
+        "label": "OTHER (rare in training data)"
+      }
+    ],
+    "ProjectState": [
+      {
+        "value": "AK",
+        "label": "AK"
+      },
+      {
+        "value": "AL",
+        "label": "AL"
+      },
+      {
+        "value": "AR",
+        "label": "AR"
+      },
+      {
+        "value": "AZ",
+        "label": "AZ"
+      },
+      {
+        "value": "CA",
+        "label": "CA"
+      },
+      {
+        "value": "CO",
+        "label": "CO"
+      },
+      {
+        "value": "CT",
+        "label": "CT"
+      },
+      {
+        "value": "DC",
+        "label": "DC"
+      },
+      {
+        "value": "DE",
+        "label": "DE"
+      },
+      {
+        "value": "FL",
+        "label": "FL"
+      },
+      {
+        "value": "GA",
+        "label": "GA"
+      },
+      {
+        "value": "HI",
+        "label": "HI"
+      },
+      {
+        "value": "IA",
+        "label": "IA"
+      },
+      {
+        "value": "ID",
+        "label": "ID"
+      },
+      {
+        "value": "IL",
+        "label": "IL"
+      },
+      {
+        "value": "IN",
+        "label": "IN"
+      },
+      {
+        "value": "KS",
+        "label": "KS"
+      },
+      {
+        "value": "KY",
+        "label": "KY"
+      },
+      {
+        "value": "LA",
+        "label": "LA"
+      },
+      {
+        "value": "MA",
+        "label": "MA"
+      },
+      {
+        "value": "MD",
+        "label": "MD"
+      },
+      {
+        "value": "ME",
+        "label": "ME"
+      },
+      {
+        "value": "MI",
+        "label": "MI"
+      },
+      {
+        "value": "MN",
+        "label": "MN"
+      },
+      {
+        "value": "MO",
+        "label": "MO"
+      },
+      {
+        "value": "MS",
+        "label": "MS"
+      },
+      {
+        "value": "MT",
+        "label": "MT"
+      },
+      {
+        "value": "NC",
+        "label": "NC"
+      },
+      {
+        "value": "ND",
+        "label": "ND"
+      },
+      {
+        "value": "NE",
+        "label": "NE"
+      },
+      {
+        "value": "NH",
+        "label": "NH"
+      },
+      {
+        "value": "NJ",
+        "label": "NJ"
+      },
+      {
+        "value": "NM",
+        "label": "NM"
+      },
+      {
+        "value": "NV",
+        "label": "NV"
+      },
+      {
+        "value": "NY",
+        "label": "NY"
+      },
+      {
+        "value": "OH",
+        "label": "OH"
+      },
+      {
+        "value": "OK",
+        "label": "OK"
+      },
+      {
+        "value": "OR",
+        "label": "OR"
+      },
+      {
+        "value": "PA",
+        "label": "PA"
+      },
+      {
+        "value": "PR",
+        "label": "PR"
+      },
+      {
+        "value": "RI",
+        "label": "RI"
+      },
+      {
+        "value": "SC",
+        "label": "SC"
+      },
+      {
+        "value": "SD",
+        "label": "SD"
+      },
+      {
+        "value": "TN",
+        "label": "TN"
+      },
+      {
+        "value": "TX",
+        "label": "TX"
+      },
+      {
+        "value": "UT",
+        "label": "UT"
+      },
+      {
+        "value": "VA",
+        "label": "VA"
+      },
+      {
+        "value": "VT",
+        "label": "VT"
+      },
+      {
+        "value": "WA",
+        "label": "WA"
+      },
+      {
+        "value": "WI",
+        "label": "WI"
+      },
+      {
+        "value": "WV",
+        "label": "WV"
+      },
+      {
+        "value": "WY",
+        "label": "WY"
+      },
+      {
+        "value": "OTHER",
+        "label": "OTHER (rare in training data)"
+      }
+    ],
+    "ProcessingMethod": [
+      {
+        "value": "7A GENERAL",
+        "label": "7A GENERAL"
+      },
+      {
+        "value": "COMMUNITY ADVANTAGE INITIATIVE",
+        "label": "COMMUNITY ADVANTAGE INITIATIVE"
+      },
+      {
+        "value": "INTERNATIONAL TRADE LOANS",
+        "label": "INTERNATIONAL TRADE LOANS"
+      },
+      {
+        "value": "PREFERRED LENDERS PROGRAM",
+        "label": "PREFERRED LENDERS PROGRAM"
+      },
+      {
+        "value": "SBA EXPRESS PROGRAM",
+        "label": "SBA EXPRESS PROGRAM"
+      },
+      {
+        "value": "WORKING CAPITAL CAPLINE",
+        "label": "WORKING CAPITAL CAPLINE"
+      },
+      {
+        "value": "OTHER",
+        "label": "OTHER (rare in training data)"
+      }
+    ],
+    "FixedorVariableInterestInd": [
+      {
+        "value": "F",
+        "label": "Fixed"
+      },
+      {
+        "value": "V",
+        "label": "Variable"
+      }
+    ],
+    "RevolverStatus": [
+      {
+        "value": "N",
+        "label": "No (term loan)"
+      },
+      {
+        "value": "Y",
+        "label": "Yes (revolving)"
+      }
+    ],
+    "CollateralInd": [
+      {
+        "value": "N",
+        "label": "No"
+      },
+      {
+        "value": "Y",
+        "label": "Yes"
+      }
+    ],
+    "BankName": [
+      {
+        "value": "1ST SOURCE BANK",
+        "label": "1ST SOURCE BANK"
+      },
+      {
+        "value": "AMERICA FIRST FEDERAL CREDIT UNION",
+        "label": "AMERICA FIRST FEDERAL CREDIT UNION"
+      },
+      {
+        "value": "AMERIS BANK",
+        "label": "AMERIS BANK"
+      },
+      {
+        "value": "ARVEST BANK",
+        "label": "ARVEST BANK"
+      },
+      {
+        "value": "BANC OF CALIFORNIA",
+        "label": "BANC OF CALIFORNIA"
+      },
+      {
+        "value": "BANCFIRST",
+        "label": "BANCFIRST"
+      },
+      {
+        "value": "BANCO POPULAR DE PUERTO RICO",
+        "label": "BANCO POPULAR DE PUERTO RICO"
+      },
+      {
+        "value": "BANK FIVE NINE",
+        "label": "BANK FIVE NINE"
+      },
+      {
+        "value": "BANK OF AMERICA, NATIONAL ASSOCIATION",
+        "label": "BANK OF AMERICA, NATIONAL ASSOCIATION"
+      },
+      {
+        "value": "BANK OF HOPE",
+        "label": "BANK OF HOPE"
+      },
+      {
+        "value": "BANKFIRST FINANCIAL SERVICES",
+        "label": "BANKFIRST FINANCIAL SERVICES"
+      },
+      {
+        "value": "BANKVISTA",
+        "label": "BANKVISTA"
+      },
+      {
+        "value": "BANNER BANK",
+        "label": "BANNER BANK"
+      },
+      {
+        "value": "BAYFIRST NATIONAL BANK",
+        "label": "BAYFIRST NATIONAL BANK"
+      },
+      {
+        "value": "BEACON BANK AND TRUST",
+        "label": "BEACON BANK AND TRUST"
+      },
+      {
+        "value": "BMO BANK NATIONAL ASSOCIATION",
+        "label": "BMO BANK NATIONAL ASSOCIATION"
+      },
+      {
+        "value": "BUSEY BANK",
+        "label": "BUSEY BANK"
+      },
+      {
+        "value": "BYLINE BANK",
+        "label": "BYLINE BANK"
+      },
+      {
+        "value": "CAPITAL BANK, NATIONAL ASSOCIATION",
+        "label": "CAPITAL BANK, NATIONAL ASSOCIATION"
+      },
+      {
+        "value": "CDC SMALL BUSINESS FINANCE CORP.",
+        "label": "CDC SMALL BUSINESS FINANCE CORP."
+      },
+      {
+        "value": "CELTIC BANK CORPORATION",
+        "label": "CELTIC BANK CORPORATION"
+      },
+      {
+        "value": "CENTRAL BANK",
+        "label": "CENTRAL BANK"
+      },
+      {
+        "value": "CHOICEONE BANK",
+        "label": "CHOICEONE BANK"
+      },
+      {
+        "value": "CITIZENS BANK",
+        "label": "CITIZENS BANK"
+      },
+      {
+        "value": "CITIZENS BANK, NATIONAL ASSOCIATION",
+        "label": "CITIZENS BANK, NATIONAL ASSOCIATION"
+      },
+      {
+        "value": "COLUMBIA BANK",
+        "label": "COLUMBIA BANK"
+      },
+      {
+        "value": "COMMONWEALTH BUSINESS BANK",
+        "label": "COMMONWEALTH BUSINESS BANK"
+      },
+      {
+        "value": "COMMUNITY BANKS OF COLORADO, A DIVISION OF NBH BANK",
+        "label": "COMMUNITY BANKS OF COLORADO, A DIVISION OF NBH BANK"
+      },
+      {
+        "value": "COMMUNITY TRUST BANK, INC.",
+        "label": "COMMUNITY TRUST BANK, INC."
+      },
+      {
+        "value": "CUSTOMERS BANK",
+        "label": "CUSTOMERS BANK"
+      },
+      {
+        "value": "EAST WEST BANK",
+        "label": "EAST WEST BANK"
+      },
+      {
+        "value": "EASTERN BANK",
+        "label": "EASTERN BANK"
+      },
+      {
+        "value": "ENTERPRISE BANK & TRUST",
+        "label": "ENTERPRISE BANK & TRUST"
+      },
+      {
+        "value": "FIFTH THIRD BANK",
+        "label": "FIFTH THIRD BANK"
+      },
+      {
+        "value": "FINWISE BANK",
+        "label": "FINWISE BANK"
+      },
+      {
+        "value": "FIRST BANK",
+        "label": "FIRST BANK"
+      },
+      {
+        "value": "FIRST BANK OF THE LAKE",
+        "label": "FIRST BANK OF THE LAKE"
+      },
+      {
+        "value": "FIRST COMMONWEALTH BANK",
+        "label": "FIRST COMMONWEALTH BANK"
+      },
+      {
+        "value": "FIRST FINANCIAL BANK",
+        "label": "FIRST FINANCIAL BANK"
+      },
+      {
+        "value": "FIRST INTERNET BANK OF INDIANA",
+        "label": "FIRST INTERNET BANK OF INDIANA"
+      },
+      {
+        "value": "FIRST MERCHANTS BANK",
+        "label": "FIRST MERCHANTS BANK"
+      },
+      {
+        "value": "FIRST NATIONAL BANK OF PENNSYLVANIA",
+        "label": "FIRST NATIONAL BANK OF PENNSYLVANIA"
+      },
+      {
+        "value": "FIRST-CITIZENS BANK & TRUST COMPANY",
+        "label": "FIRST-CITIZENS BANK & TRUST COMPANY"
+      },
+      {
+        "value": "FIVE STAR BANK",
+        "label": "FIVE STAR BANK"
+      },
+      {
+        "value": "FROST BANK",
+        "label": "FROST BANK"
+      },
+      {
+        "value": "FULTON BANK, NATIONAL ASSOCIATION",
+        "label": "FULTON BANK, NATIONAL ASSOCIATION"
+      },
+      {
+        "value": "GBANK",
+        "label": "GBANK"
+      },
+      {
+        "value": "GLACIER BANK",
+        "label": "GLACIER BANK"
+      },
+      {
+        "value": "GULF COAST BANK AND TRUST COMPANY",
+        "label": "GULF COAST BANK AND TRUST COMPANY"
+      },
+      {
+        "value": "HANMI BANK",
+        "label": "HANMI BANK"
+      },
+      {
+        "value": "HAPPEN BANK",
+        "label": "HAPPEN BANK"
+      },
+      {
+        "value": "HARVEST SMALL BUSINESS FINANCE, LLC",
+        "label": "HARVEST SMALL BUSINESS FINANCE, LLC"
+      },
+      {
+        "value": "HOMETRUST BANK",
+        "label": "HOMETRUST BANK"
+      },
+      {
+        "value": "INCREDIBLEBANK",
+        "label": "INCREDIBLEBANK"
+      },
+      {
+        "value": "JPMORGAN CHASE BANK, NATIONAL ASSOCIATION",
+        "label": "JPMORGAN CHASE BANK, NATIONAL ASSOCIATION"
+      },
+      {
+        "value": "KEYBANK NATIONAL ASSOCIATION",
+        "label": "KEYBANK NATIONAL ASSOCIATION"
+      },
+      {
+        "value": "LIVE OAK BANKING COMPANY",
+        "label": "LIVE OAK BANKING COMPANY"
+      },
+      {
+        "value": "MANUFACTURERS AND TRADERS TRUST COMPANY",
+        "label": "MANUFACTURERS AND TRADERS TRUST COMPANY"
+      },
+      {
+        "value": "MERCHANTS BANK OF INDIANA",
+        "label": "MERCHANTS BANK OF INDIANA"
+      },
+      {
+        "value": "MERIDIAN BANK",
+        "label": "MERIDIAN BANK"
+      },
+      {
+        "value": "METRO CITY BANK",
+        "label": "METRO CITY BANK"
+      },
+      {
+        "value": "MIDWEST REGIONAL BANK",
+        "label": "MIDWEST REGIONAL BANK"
+      },
+      {
+        "value": "MOUNTAIN AMERICA FCU",
+        "label": "MOUNTAIN AMERICA FCU"
+      },
+      {
+        "value": "NEWTEK SMALL BUSINESS FINANCE, LLC",
+        "label": "NEWTEK SMALL BUSINESS FINANCE, LLC"
+      },
+      {
+        "value": "NICOLET NATIONAL BANK",
+        "label": "NICOLET NATIONAL BANK"
+      },
+      {
+        "value": "NORTHEAST BANK",
+        "label": "NORTHEAST BANK"
+      },
+      {
+        "value": "NORTHWEST BANK",
+        "label": "NORTHWEST BANK"
+      },
+      {
+        "value": "OAKSTAR BANK",
+        "label": "OAKSTAR BANK"
+      },
+      {
+        "value": "OLD NATIONAL BANK",
+        "label": "OLD NATIONAL BANK"
+      },
+      {
+        "value": "OPEN BANK",
+        "label": "OPEN BANK"
+      },
+      {
+        "value": "ORIENTAL BANK",
+        "label": "ORIENTAL BANK"
+      },
+      {
+        "value": "PCB BANK",
+        "label": "PCB BANK"
+      },
+      {
+        "value": "PEOPLES BANK",
+        "label": "PEOPLES BANK"
+      },
+      {
+        "value": "PINNACLE BANK",
+        "label": "PINNACLE BANK"
+      },
+      {
+        "value": "PLUMAS BANK",
+        "label": "PLUMAS BANK"
+      },
+      {
+        "value": "PNC BANK, NATIONAL ASSOCIATION",
+        "label": "PNC BANK, NATIONAL ASSOCIATION"
+      },
+      {
+        "value": "READYCAP LENDING, LLC",
+        "label": "READYCAP LENDING, LLC"
+      },
+      {
+        "value": "REGIONS BANK",
+        "label": "REGIONS BANK"
+      },
+      {
+        "value": "RENASANT BANK",
+        "label": "RENASANT BANK"
+      },
+      {
+        "value": "SANTANDER BANK, NATIONAL ASSOCIATION",
+        "label": "SANTANDER BANK, NATIONAL ASSOCIATION"
+      },
+      {
+        "value": "SEACOAST NATIONAL BANK",
+        "label": "SEACOAST NATIONAL BANK"
+      },
+      {
+        "value": "SIMMONS BANK",
+        "label": "SIMMONS BANK"
+      },
+      {
+        "value": "SOUTHSTATE BANK, NATIONAL ASSOCIATION",
+        "label": "SOUTHSTATE BANK, NATIONAL ASSOCIATION"
+      },
+      {
+        "value": "STEARNS BANK NATIONAL ASSOCIATION",
+        "label": "STEARNS BANK NATIONAL ASSOCIATION"
+      },
+      {
+        "value": "SUNFLOWER BANK NATIONAL ASSOCIATION",
+        "label": "SUNFLOWER BANK NATIONAL ASSOCIATION"
+      },
+      {
+        "value": "TD BANK, NATIONAL ASSOCIATION",
+        "label": "TD BANK, NATIONAL ASSOCIATION"
+      },
+      {
+        "value": "THE BANCORP BANK NATIONAL ASSOCIATION",
+        "label": "THE BANCORP BANK NATIONAL ASSOCIATION"
+      },
+      {
+        "value": "THE HUNTINGTON NATIONAL BANK",
+        "label": "THE HUNTINGTON NATIONAL BANK"
+      },
+      {
+        "value": "TOWNEBANK",
+        "label": "TOWNEBANK"
+      },
+      {
+        "value": "TRUIST BANK",
+        "label": "TRUIST BANK"
+      },
+      {
+        "value": "U.S. BANK, NATIONAL ASSOCIATION",
+        "label": "U.S. BANK, NATIONAL ASSOCIATION"
+      },
+      {
+        "value": "UNITED COMMUNITY BANK",
+        "label": "UNITED COMMUNITY BANK"
+      },
+      {
+        "value": "UNITED MIDWEST SAVINGS BANK NATIONAL ASSOCIATION",
+        "label": "UNITED MIDWEST SAVINGS BANK NATIONAL ASSOCIATION"
+      },
+      {
+        "value": "US METRO BANK",
+        "label": "US METRO BANK"
+      },
+      {
+        "value": "VELOCITYSBA, LLC",
+        "label": "VELOCITYSBA, LLC"
+      },
+      {
+        "value": "WALLIS BANK",
+        "label": "WALLIS BANK"
+      },
+      {
+        "value": "WELLS FARGO BANK NATIONAL ASSOCIATION",
+        "label": "WELLS FARGO BANK NATIONAL ASSOCIATION"
+      },
+      {
+        "value": "WILMINGTON SAVINGS FUND SOCIETY FSB",
+        "label": "WILMINGTON SAVINGS FUND SOCIETY FSB"
+      },
+      {
+        "value": "ZIONS BANCORPORATION, NATIONAL ASSOCIATION",
+        "label": "ZIONS BANCORPORATION, NATIONAL ASSOCIATION"
+      },
+      {
+        "value": "OTHER",
+        "label": "OTHER (rare in training data)"
+      }
+    ]
+  },
+  "naics3_levels": [
+    "111",
+    "112",
+    "115",
+    "221",
+    "236",
+    "237",
+    "238",
+    "311",
+    "312",
+    "321",
+    "323",
+    "325",
+    "326",
+    "327",
+    "332",
+    "333",
+    "334",
+    "336",
+    "337",
+    "339",
+    "423",
+    "424",
+    "441",
+    "442",
+    "444",
+    "445",
+    "446",
+    "447",
+    "448",
+    "449",
+    "451",
+    "453",
+    "454",
+    "456",
+    "457",
+    "458",
+    "459",
+    "484",
+    "485",
+    "488",
+    "492",
+    "511",
+    "512",
+    "517",
+    "518",
+    "523",
+    "524",
+    "531",
+    "532",
+    "541",
+    "561",
+    "562",
+    "611",
+    "621",
+    "623",
+    "624",
+    "711",
+    "713",
+    "721",
+    "722",
+    "811",
+    "812"
+  ],
+  "ranges": {
+    "amount": [
+      7500.0,
+      250000.0,
+      4800000.0
+    ],
+    "rate": [
+      2.99,
+      6.0,
+      11.5
+    ],
+    "jobs": [
+      0.0,
+      5.0,
+      94.0
+    ]
+  },
+  "quantiles": [
+    0.0004968692938481497,
+    0.0016585508532507244,
+    0.0019767692108010513,
+    0.002222562844416763,
+    0.0024277633711986112,
+    0.0026069974530260973,
+    0.002770916773101552,
+    0.0029367179338552593,
+    0.003111291526850967,
+    0.003288657223504817,
+    0.003475827215222304,
+    0.0036665977557839144,
+    0.003858582536633398,
+    0.00404058726246831,
+    0.00422739425371383,
+    0.00444728025053286,
+    0.004676579741994744,
+    0.004916538877342208,
+    0.005140108828964481,
+    0.005399652999778259,
+    0.005668872606377627,
+    0.0059560566053942785,
+    0.006234614222617383,
+    0.0065554626829780645,
+    0.006867561173071461,
+    0.007233703642403758,
+    0.007610487227829991,
+    0.00796506082706014,
+    0.008355083791996768,
+    0.008703969807087271,
+    0.009082473429308667,
+    0.009459829364739384,
+    0.00987735017249603,
+    0.010262224536420138,
+    0.01073234234999913,
+    0.011162443149492003,
+    0.011575813295590915,
+    0.011989997603654512,
+    0.012429932533312952,
+    0.012887440729398377,
+    0.013357369889322552,
+    0.013821705640737706,
+    0.014273403634969761,
+    0.014767599845130335,
+    0.015352310977148786,
+    0.01590806179378749,
+    0.01653121957906704,
+    0.017139218632072687,
+    0.0177597019282345,
+    0.018430770934663852,
+    0.01906961925760872,
+    0.019778750081919868,
+    0.02048902180544777,
+    0.021268075222409796,
+    0.022013509935496643,
+    0.022872379953847586,
+    0.023699039261871172,
+    0.024657023909555903,
+    0.025491201306242425,
+    0.026420299743748463,
+    0.02731496031174993,
+    0.02831971970574246,
+    0.029415664526148386,
+    0.030499322715594978,
+    0.031659476488494175,
+    0.03284974444153629,
+    0.03408896869918741,
+    0.03535942439555573,
+    0.03660556735328716,
+    0.03797353462499916,
+    0.039419725757639926,
+    0.0410394145740129,
+    0.042678135880055014,
+    0.04457384282758477,
+    0.04640116219149407,
+    0.0482583082247746,
+    0.050470991464830924,
+    0.05246290202039544,
+    0.05466180213214807,
+    0.05715312820522857,
+    0.05968237974769213,
+    0.06214462152428761,
+    0.0646855708677431,
+    0.0671398733388805,
+    0.06966534234337474,
+    0.0723996303148545,
+    0.07479497793997035,
+    0.07794486159710708,
+    0.08104404459945455,
+    0.08463732328447601,
+    0.08866663799835184,
+    0.09288978672478546,
+    0.09763624248688459,
+    0.1026281677166172,
+    0.10873101711167053,
+    0.11635227689099903,
+    0.1275913456474061,
+    0.14006876829712878,
+    0.16022890341290322,
+    0.2036214831432973,
+    0.3610035078765257
+  ],
+  "tiers": {
+    "Low": {
+      "n": 24097,
+      "default_rate": 0.013072166659750176,
+      "share_of_defaults": 0.2900552486187845
+    },
+    "Medium": {
+      "n": 6884,
+      "default_rate": 0.05505520046484602,
+      "share_of_defaults": 0.34898710865561694
+    },
+    "High": {
+      "n": 3443,
+      "default_rate": 0.11385419692128958,
+      "share_of_defaults": 0.36095764272559855
+    }
+  },
+  "base_rate_test": 0.031547757378573085,
+  "test_year": 2023,
+  "train_years": "2019-2022",
+  "horizon_months": 36
+}
