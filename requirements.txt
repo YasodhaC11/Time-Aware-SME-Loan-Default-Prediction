@@ -1,8 +1,8 @@
 Flask
-joblib
 numpy
 pandas
 scikit-learn
+joblib
 lightgbm
 shap
 gunicorn
